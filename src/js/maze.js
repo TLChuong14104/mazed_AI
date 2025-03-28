@@ -1,3 +1,5 @@
+import PriorityQueue from 'js-priority-queue';
+
 class Maze {
   constructor(
     map = [[]],
@@ -7,30 +9,26 @@ class Maze {
     this.map = map;
     this.start = start;
     this.target = target;
-    this.visited = new Set(); // Thay hashed bằng Set để theo dõi các ô đã thăm
-    this.steps = []; // Lưu các bước để trực quan hóa
-    this.path = []; // Lưu đường đi cuối cùng
+    this.visited = new Set();
+    this.steps = [];
+    this.path = [];
   }
 
   isGoal(state = []) {
     return state[0] === this.target[0] && state[1] === this.target[1];
   }
 
-  // Hàm heuristic: Khoảng cách Manhattan
   heuristic(p1, p2) {
     return Math.abs(p1[0] - p2[0]) + Math.abs(p1[1] - p2[1]);
   }
 
-  // Tìm các ô lân cận hợp lệ (giữ nguyên từ code cũ, nhưng bỏ sắp xếp vì A* sẽ tự xử lý)
   findNextStates(current) {
     const result = [];
 
-    // To left
     if (current[1] && !this.map[current[0]][current[1] - 1]) {
       result.push([current[0], current[1] - 1]);
     }
 
-    // To right
     if (
       current[1] != this.map[0]?.length - 1 &&
       !this.map[current[0]][current[1] + 1]
@@ -38,12 +36,10 @@ class Maze {
       result.push([current[0], current[1] + 1]);
     }
 
-    // To up
     if (current[0] && !this.map[current[0] - 1][current[1]]) {
       result.push([current[0] - 1, current[1]]);
     }
 
-    // To down
     if (
       current[0] != this.map.length - 1 &&
       !this.map[current[0] + 1][current[1]]
@@ -54,51 +50,53 @@ class Maze {
     return result;
   }
 
-  // Thuật toán A*
   aStar() {
-    // Hàng đợi ưu tiên: mỗi phần tử là [fScore, gScore, state, parent]
-    const openSet = [
-      [this.heuristic(this.start, this.target), 0, this.start, null],
-    ];
-    const cameFrom = new Map(); // Lưu parent của mỗi ô để tái tạo đường đi
-    const gScore = new Map(); // Chi phí từ start đến state
-    const fScore = new Map(); // f(n) = g(n) + h(n)
+    const openSet = new PriorityQueue({
+      comparator: (a, b) => a[0] - b[0],
+    });
+    openSet.queue([this.heuristic(this.start, this.target), 0, this.start, null]);
 
-    // Khởi tạo gScore và fScore cho điểm bắt đầu
+    const cameFrom = new Map();
+    const gScore = new Map();
+    const fScore = new Map();
+
     const startKey = this.start.toString();
     gScore.set(startKey, 0);
     fScore.set(startKey, this.heuristic(this.start, this.target));
 
     while (openSet.length > 0) {
-      // Sắp xếp openSet theo fScore và lấy phần tử có fScore nhỏ nhất
-      openSet.sort((a, b) => a[0] - b[0]);
-      const [currentFScore, currentGScore, current, parent] = openSet.shift();
+      const [currentFScore, currentGScore, current, parent] = openSet.dequeue();
 
-      // Thêm vào visited
       const currentKey = current.toString();
       this.visited.add(currentKey);
 
-      // Lưu bước hiện tại để trực quan hóa
       const nextStates = this.findNextStates(current);
-      this.steps.push({ current, nextStates, pops: [] });
+      const hScore = this.heuristic(current, this.target);
+      // Lưu các giá trị fScore, gScore, hScore vào steps
+      this.steps.push({
+        current,
+        nextStates,
+        pops: [],
+        fScore: currentFScore,
+        gScore: currentGScore,
+        hScore: hScore,
+      });
 
-      // Nếu đến đích, tái tạo đường đi và trả về
       if (this.isGoal(current)) {
         this.path = this.reconstructPath(cameFrom, current);
+        const pathSet = new Set(this.path.map(pos => pos.toString()));
+        const deadEnds = Array.from(this.visited).filter(pos => !pathSet.has(pos));
+        this.steps.push({ current, nextStates: [], deadEnds });
         return true;
       }
 
-      // Duyệt các ô lân cận
       for (const nextState of nextStates) {
         const nextKey = nextState.toString();
 
-        // Nếu đã thăm, bỏ qua
         if (this.visited.has(nextKey)) continue;
 
-        // Tính gScore tạm thời
-        const tentativeGScore = currentGScore + 1; // Mỗi bước có chi phí 1
+        const tentativeGScore = currentGScore + 1;
 
-        // Nếu chưa có gScore cho nextState hoặc gScore mới tốt hơn
         if (!gScore.has(nextKey) || tentativeGScore < gScore.get(nextKey)) {
           cameFrom.set(nextKey, current);
           gScore.set(nextKey, tentativeGScore);
@@ -106,17 +104,14 @@ class Maze {
           const fScoreValue = tentativeGScore + hScore;
           fScore.set(nextKey, fScoreValue);
 
-          // Thêm vào openSet
-          openSet.push([fScoreValue, tentativeGScore, nextState, current]);
+          openSet.queue([fScoreValue, tentativeGScore, nextState, current]);
         }
       }
     }
 
-    // Không tìm thấy đường đi
     return false;
   }
 
-  // Tái tạo đường đi từ cameFrom
   reconstructPath(cameFrom, current) {
     const path = [current];
     let currentKey = current.toString();
@@ -127,10 +122,9 @@ class Maze {
       path.push(current);
     }
 
-    return path.reverse(); // Đảo ngược để đi từ start đến target
+    return path.reverse();
   }
 
-  // Hàm khởi chạy A*
   startAStar() {
     this.path = [];
     this.steps = [];

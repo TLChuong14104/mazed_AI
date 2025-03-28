@@ -9,15 +9,13 @@ class GameGui {
     this.init(maze, { cellSize, delay });
   }
 
-  init(maze = new Maze(), { cellSize = 50, delay = 500 } = {}) {
+  init(maze = new Maze(), { cellSize = 50, delay = 200 } = {}) {
     clearInterval(this.interval);
-    // Init values
     this.cellSize = cellSize;
     this.maze = maze;
     this.current = maze.start;
     this.delay = delay;
 
-    // Render flag
     this.element.innerHTML = "";
     this.element.innerHTML += /*html*/ `<div class="maze-flag" style="width: ${
       this.cellSize
@@ -25,7 +23,6 @@ class GameGui {
       this.cellSize * this.maze.target[0]
     }px; left: ${this.cellSize * this.maze.target[1]}px"></div>`;
 
-    // Render map
     for (const row of this.maze.map) {
       const rowEl = document.createElement("div");
       rowEl.classList.add("maze-row");
@@ -41,7 +38,6 @@ class GameGui {
       this.element.append(rowEl);
     }
 
-    // Render character
     this.character = document.createElement("div");
     this.character.classList.add("maze-character");
     this.character.style.width = this.cellSize + "px";
@@ -49,8 +45,11 @@ class GameGui {
     this.element.append(this.character);
     this.render();
 
-    // Recreate chart
-    this.chart?.destroy();
+    // Hủy biểu đồ cũ trước khi tạo biểu đồ mới
+    if (this.chart) {
+      this.chart.destroy();
+    }
+
     this.chart = new Chart(document.getElementById("maze-chart"), {
       type: "bar",
       data: {
@@ -66,7 +65,6 @@ class GameGui {
         animation: {
           y: { duration: 0 },
         },
-
         scales: {
           x: {
             grid: {
@@ -79,7 +77,6 @@ class GameGui {
             },
           },
         },
-
         plugins: {
           legend: {
             display: false,
@@ -87,6 +84,12 @@ class GameGui {
         },
       },
     });
+
+    // Xóa nội dung bảng phép tính trước khi khởi tạo lại
+    const calcTableBody = document.getElementById("calc-table-body");
+    if (calcTableBody) {
+      calcTableBody.innerHTML = "";
+    }
   }
 
   render() {
@@ -118,8 +121,14 @@ class GameGui {
     this.maze.startAStar();
     const steps = this.maze.steps;
     const path = this.maze.path;
-    let len = 0; // Độ dài đường đi tạm thời
-    let visitedCount = 0; // Số ô đã thăm (thay cho "số bước đi sai")
+    let len = 0;
+    let visitedCount = 0;
+
+    // Xóa nội dung bảng trước khi bắt đầu
+    const calcTableBody = document.getElementById("calc-table-body");
+    if (calcTableBody) {
+      calcTableBody.innerHTML = "";
+    }
 
     this.interval = setInterval(() => {
       const step = steps.shift();
@@ -128,7 +137,6 @@ class GameGui {
         this.audio.win.play();
         clearInterval(this.interval);
 
-        // Vẽ đường đi cuối cùng
         this.interval = setInterval(() => {
           const p = path.pop();
           if (!p) return clearInterval(this.interval);
@@ -139,7 +147,6 @@ class GameGui {
         return;
       }
 
-      // Với A*, mỗi bước là một ô được thăm
       visitedCount++;
       this.audio.swimming.play();
 
@@ -149,19 +156,31 @@ class GameGui {
 
       this.drawRects(step.nextStates, "maze-next");
 
-      // A* không có pops, nên bỏ phần vẽ pops
-      // this.drawRects(step.pops, "maze-pop");
+      if (step.deadEnds) {
+        this.drawRects(step.deadEnds.map(pos => pos.split(',').map(Number)), "maze-pop");
+      }
 
       document.getElementById(
         "maze-current-pos"
       ).innerHTML = `(${step.current.join(", ")})`;
 
-      // Cập nhật biểu đồ
       this.chart.data.datasets[0].data.pop();
       this.chart.data.datasets[0].data.pop();
       this.chart.data.datasets[0].data.push(this.maze.path.length, visitedCount);
 
       this.chart.update();
+
+      // Thêm thông tin phép tính vào bảng
+      if (step.fScore !== undefined) {
+        const row = document.createElement("tr");
+        row.innerHTML = /*html*/ `
+          <td>(${step.current.join(", ")})</td>
+          <td>${step.fScore.toFixed(2)}</td>
+          <td>${step.gScore}</td>
+          <td>${step.hScore}</td>
+        `;
+        calcTableBody.appendChild(row);
+      }
     }, this.delay);
   }
 }
