@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vịt Đi Ép Ếch</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <section class="game-container">
+      <div class="maze-game" id="maze-game"></div>
+    </section>
+
+    <section style="display: flex; flex-wrap: wrap">
+      <div style="flex: 1">
+        <div class="game-menu">
+          <div class="game-menu-header">
+            <h3>Cài đặt</h3>
+          </div>
+          <div class="game-menu-body">
+            <div class="game-menu-row">
+              <label for="maze-width">Chiều rộng</label>
+
+              <input
+                type="range"
+                name="maze-width"
+                min="5"
+                max="50"
+                id="maze-width"
+                oninput="this.nextElementSibling.value = this.value"
+                value="10"
+              />
+
+              <output>10</output>
+            </div>
+
+            <div class="game-menu-row">
+              <label for="maze-height">Chiều cao</label>
+
+              <input
+                type="range"
+                name="maze-height"
+                min="5"
+                max="50"
+                id="maze-height"
+                oninput="this.nextElementSibling.value = this.value"
+                value="10"
+              />
+
+              <output>10</output>
+            </div>
+
+            <div class="game-menu-row">
+              <label for="maze-delay">Độ trễ</label>
+
+              <input
+                type="range"
+                name="maze-delay"
+                min="100"
+                max="10000"
+                id="maze-delay"
+                oninput="this.nextElementSibling.value = this.value"
+                value="500"
+              />
+
+              <output>500</output>
+            </div>
+
+            <div class="game-menu-row">
+              <button class="button" id="maze-accept">Áp dụng</button>
+              <button class="button button-danger" id="maze-play">
+                Gét gô!
+              </button>
+            </div>
+          </div>
+
+          <div class="game-menu-footer">
+            <a href="#" onclick="toggleModal()">Chi tiết dự án</a>
+          </div>
+        </div>
+        <div class="game-menu">
+          <div class="game-menu-header">
+            <h3>Thông tin</h3>
+          </div>
+
+          <div class="game-menu-body">
+            <div class="game-menu-row">
+              <strong>Vị trí hiện tại</strong>
+              <span id="maze-current-pos">-</span>
+            </div>
+
+            <div class="game-menu-row">
+              <canvas id="maze-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="game-menu">
+        <div class="game-menu-header">
+          <h3>Chú thích</h3>
+        </div>
+
+        <div class="game-menu-body">
+          <div class="game-menu-row">
+            <img src="./assets/images/Duck.png" width="40" alt="" />
+            <span>Người chơi</span>
+          </div>
+
+          <div class="game-menu-row">
+            <img
+              src="./assets/images/FinishLine.png"
+              height="40"
+              style="margin: 0 15px"
+              alt=""
+            />
+            <span>GOAL</span>
+          </div>
+
+          <div class="game-menu-row">
+            <img src="./assets/images/Grass.png" width="40" alt="" />
+            <span>Vật cản</span>
+          </div>
+
+          <div class="game-menu-row">
+            <img src="./assets/images/Water.png" width="40" alt="" />
+            <span>Đường nước</span>
+          </div>
+
+          <div class="game-menu-row">
+            <div class="game-box-info"></div>
+            <span>Đã đi qua</span>
+          </div>
+
+          <div class="game-menu-row">
+            <div class="game-box-info" style="background: #00800050"></div>
+            <span>Solution</span>
+          </div>
+
+          <div class="game-menu-row">
+            <div class="maze-pop" style="width: 40px; height: 40px"></div>
+            <span>Đường cụt</span>
+          </div>
+
+          <div class="game-menu-row">
+            <div
+              style="width: 40px; height: 40px"
+              class="maze-cell maze-next"
+            ></div>
+            <span>Ô đang nằm trong ngăn xếp</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="maze-login" id="maze-login">
+      <div class="maze-login-row">
+        <img src="./assets/images/Vit.png" alt="" class="maze-login-vit" />
+        <img src="./assets/images/Duck.png" alt="" class="maze-login-duck" />
+      </div>
+
+      <img src="./assets/images/DFS.png" alt="" class="maze-login-dfs" />
+      <div class="d-flex">
+        <button class="maze-login-play-btn" id="maze-login-play-btn">
+          <strong>Play</strong>
+          <i class="fa-solid fa-volume-high"></i>
+        </button>
+
+        <button
+          class="maze-login-play-btn secondary"
+          id="maze-login-play-btn-without-sound"
+        >
+          <strong>Play</strong>
+          <i class="fa-solid fa-volume-xmark"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="modal" onclick="toggleModal()">
+      <div>
+        <div class="game-menu" onclick="event.stopPropagation()">
+          <div class="game-menu-header">
+            <h3>Những người thực hiện</h3>
+          </div>
+
+          <div class="game-menu-body">
+            <div class="game-menu-row">
+              <a href="https://github.com/thangved" target="_blank">
+                <img src="https://github.com/thangved.png" width="50" alt="" />
+              </a>
+              <span>Kim Minh Thắng</span>
+            </div>
+
+            <div class="game-menu-row">
+              <a href="https://github.com/huyluongme" target="_blank">
+                <img
+                  src="https://github.com/huyluongme.png"
+                  width="50"
+                  alt=""
+                />
+              </a>
+              <span>Lương Đức Huy</span>
+            </div>
+
+            <div class="game-menu-row">
+              <a href="#">
+                <img
+                  src="http://www.gravatar.com/avatar/?d=identicon"
+                  width="50"
+                  alt=""
+                />
+              </a>
+              <span>Nguyễn Huy Cường</span>
+            </div>
+
+            <div class="game-menu-row">
+              <a href="#">
+                <img
+                  src="http://www.gravatar.com/avatar/?d=identicon"
+                  width="50"
+                  alt=""
+                />
+              </a>
+              <span>Nguyễn Hoàng Duy</span>
+            </div>
+          </div>
+
+          <div class="game-menu-header">
+            <h3>Chi tiết về dự án</h3>
+          </div>
+
+          <div class="game-menu-body">
+            <div class="game-menu-row">Bài toán mê cung</div>
+            <div class="game-menu-row">Giải thuật: DFS</div>
+            <div class="game-menu-row">
+              <img
+                src="./assets/images/js.png"
+                style="border-radius: 0"
+                width="20"
+                alt=""
+              />
+              <span>Ngôn ngữ lập trình: Javascript</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
