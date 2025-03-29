@@ -9,27 +9,23 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
     />
-    <!-- Thêm Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
 
   <body>
-    <!-- Container chính chứa mê cung và các section bên phải -->
-    <div class="main-container">
-      <!-- Section chứa mê cung -->
-      <section class="game-container">
-        <div class="maze-game" id="maze-game"></div>
-      </section>
+    <section class="game-container">
+      <div class="maze-game" id="maze-game"></div>
+    </section>
 
-      <!-- Section chứa Cài đặt, Thông tin, và Chú thích -->
-      <section class="right-sections">
-        <div class="game-menu settings-section">
+    <section style="display: flex; flex-wrap: wrap">
+      <div style="flex: 1">
+        <div class="game-menu">
           <div class="game-menu-header">
             <h3>Cài đặt</h3>
           </div>
           <div class="game-menu-body">
             <div class="game-menu-row">
               <label for="maze-width">Chiều rộng</label>
+
               <input
                 type="range"
                 name="maze-width"
@@ -39,11 +35,13 @@
                 oninput="this.nextElementSibling.value = this.value"
                 value="10"
               />
+
               <output>10</output>
             </div>
 
             <div class="game-menu-row">
               <label for="maze-height">Chiều cao</label>
+
               <input
                 type="range"
                 name="maze-height"
@@ -53,11 +51,13 @@
                 oninput="this.nextElementSibling.value = this.value"
                 value="10"
               />
+
               <output>10</output>
             </div>
 
             <div class="game-menu-row">
               <label for="maze-delay">Độ trễ</label>
+
               <input
                 type="range"
                 name="maze-delay"
@@ -67,6 +67,7 @@
                 oninput="this.nextElementSibling.value = this.value"
                 value="500"
               />
+
               <output>500</output>
             </div>
 
@@ -82,106 +83,113 @@
             <a href="#" onclick="toggleModal()">Chi tiết dự án</a>
           </div>
         </div>
-
-        <div class="game-menu info-section">
+        <div class="game-menu">
           <div class="game-menu-header">
             <h3>Thông tin</h3>
           </div>
+
           <div class="game-menu-body">
             <div class="game-menu-row">
               <strong>Vị trí hiện tại</strong>
-              <span id="maze-current-pos">[1,0]</span>
+              <span id="maze-current-pos">-</span>
             </div>
+
             <div class="game-menu-row">
               <canvas id="maze-chart"></canvas>
             </div>
           </div>
         </div>
-
-        <div class="game-menu legend-section">
-          <div class="game-menu-header">
-            <h3>Chú thích</h3>
-          </div>
-          <div class="game-menu-body">
-            <div class="game-menu-row">
-              <img src="./assets/images/Duck.png" width="40" alt="" />
-              <span>Người chơi</span>
-            </div>
-            <div class="game-menu-row">
-              <img
-                src="./assets/images/FinishLine.png"
-                height="40"
-                style="margin: 0 15px"
-                alt=""
-              />
-              <span>GOAL</span>
-            </div>
-            <div class="game-menu-row">
-              <img src="./assets/images/Grass.png" width="40" alt="" />
-              <span>Vật cản</span>
-            </div>
-            <div class="game-menu-row">
-              <img src="./assets/images/Water.png" width="40" alt="" />
-              <span>Đường nước</span>
-            </div>
-            <div class="game-menu-row">
-              <div class="game-box-info"></div>
-              <span>Đã đi qua</span>
-            </div>
-            <div class="game-menu-row">
-              <div class="game-box-info" style="background: #00800050"></div>
-              <span>Solution</span>
-            </div>
-            <div class="game-menu-row">
-              <div class="maze-pop" style="width: 40px; height: 40px"></div>
-              <span>Đường cụt</span>
-            </div>
-            <div class="game-menu-row">
-              <div
-                style="width: 40px; height: 40px"
-                class="maze-cell maze-next"
-              ></div>
-              <span>Ô đang nằm trong ngăn xếp</span>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <!-- Bảng phép tính A* được đặt dưới cùng -->
-    <section class="calc-section">
+      </div>
       <div class="game-menu">
         <div class="game-menu-header">
-          <h3>Phép tính A*</h3>
+          <h3>Chú thích</h3>
         </div>
+
         <div class="game-menu-body">
-          <table id="calc-table">
-            <thead>
-              <tr>
-                <th>Vị trí</th>
-                <th>fScore</th>
-                <th>gScore</th>
-                <th>hScore</th>
-              </tr>
-            </thead>
-            <tbody id="calc-table-body"></tbody>
-          </table>
+          <div class="game-menu-row">
+            <img src="./assets/images/Duck.png" width="40" alt="" />
+            <span>Người chơi</span>
+          </div>
+
+          <div class="game-menu-row">
+            <img
+              src="./assets/images/FinishLine.png"
+              height="40"
+              style="margin: 0 15px"
+              alt=""
+            />
+            <span>GOAL</span>
+          </div>
+
+          <div class="game-menu-row">
+            <img src="./assets/images/Grass.png" width="40" alt="" />
+            <span>Vật cản</span>
+          </div>
+
+          <div class="game-menu-row">
+            <img src="./assets/images/Water.png" width="40" alt="" />
+            <span>Đường nước</span>
+          </div>
+
+          <div class="game-menu-row">
+            <div class="game-box-info"></div>
+            <span>Đã đi qua</span>
+          </div>
+
+          <div class="game-menu-row">
+            <div class="game-box-info" style="background: #00800050"></div>
+            <span>Solution</span>
+          </div>
+
+          <div class="game-menu-row">
+            <div class="maze-pop" style="width: 40px; height: 40px"></div>
+            <span>Đường cụt</span>
+          </div>
+
+          <div class="game-menu-row">
+            <div
+              style="width: 40px; height: 40px"
+              class="maze-cell maze-next"
+            ></div>
+            <span>Ô đang nằm trong ngăn xếp</span>
+          </div>
         </div>
       </div>
     </section>
-
-    <!-- Màn hình login -->
+ <!-- Bảng phép tính A* được đặt dưới cùng -->
+ <section class="calc-section">
+  <div class="game-menu">
+    <div class="game-menu-header">
+      <h3>Phép tính A*</h3>
+    </div>
+    <div class="game-menu-body">
+      <table id="calc-table">
+        <thead>
+          <tr>
+            <th>Vị trí</th>
+            <th>fScore</th>
+            <th>gScore</th>
+            <th>hScore</th>
+          </tr>
+        </thead>
+        <tbody id="calc-table-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
     <div class="maze-login" id="maze-login">
       <div class="maze-login-row">
         <img src="./assets/images/Vit.png" alt="" class="maze-login-vit" />
         <img src="./assets/images/Duck.png" alt="" class="maze-login-duck" />
       </div>
+
       <img src="./assets/images/DFS.png" alt="" class="maze-login-dfs" />
       <div class="d-flex">
         <button class="maze-login-play-btn" id="maze-login-play-btn">
           <strong>Play</strong>
           <i class="fa-solid fa-volume-high"></i>
         </button>
+
         <button
           class="maze-login-play-btn secondary"
           id="maze-login-play-btn-without-sound"
@@ -192,100 +200,55 @@
       </div>
     </div>
 
-    <!-- Modal chi tiết dự án -->
-    <div class="modal" onclick="toggleModal()">
-      <div>
-        <div class="game-menu" onclick="event.stopPropagation()">
-          <div class="game-menu-header">
-            <h3>Những người thực hiện</h3>
+   <!-- Modal chi tiết dự án -->
+   <div class="modal" onclick="toggleModal()">
+    <div>
+      <div class="game-menu" onclick="event.stopPropagation()">
+        <div class="game-menu-header">
+          <h3>Những người thực hiện</h3>
+        </div>
+        <div class="game-menu-body">
+          <div class="game-menu-row">
+            <span>Trương Lê Chương - KHMT2211036</span>
           </div>
-          <div class="game-menu-body">
-            <div class="game-menu-row">
-              <span>Trương Lê Chương - KHMT2211036</span>
-            </div>
-            <div class="game-menu-row">
-              <a href="https://github.com/TLChuong14104" target="_blank">
-              </a>
-              <span>Trần Nguyên Bảo - KHMT2211020</span>
-            </div>
-            <div class="game-menu-row">
-              <a href="#">
-              </a>
-              <span>Võ Đại Nhân - KHMT2211045</span>
-            </div>
-            <div class="game-menu-row">
-              <a href="#">
-              </a>
-              <span>Huỳnh Nguyễn Nhật Hào - KHMT2211025</span>
-            </div>
-            <div class="game-menu-row">
-              <a href="https://github.com/your-username" target="_blank">
-              </a>
-            </div>
+          <div class="game-menu-row">
+            <a href="https://github.com/TLChuong14104" target="_blank">
+            </a>
+            <span>Trần Nguyên Bảo - KHMT2211020</span>
           </div>
-          <div class="game-menu-header">
-            <h3>Chi tiết về dự án</h3>
+          <div class="game-menu-row">
+            <a href="#">
+            </a>
+            <span>Võ Đại Nhân - KHMT2211045</span>
           </div>
-          <div class="game-menu-body">
-            <div class="game-menu-row">Bài toán mê cung</div>
-            <div class="game-menu-row">Giải thuật: A*</div>
-            <div class="game-menu-row">
-              <img
-                src="./assets/images/js.png"
-                style="border-radius: 0"
-                width="20"
-                alt=""
-              />
-              <span>Ngôn ngữ lập trình: Javascript</span>
-            </div>
+          <div class="game-menu-row">
+            <a href="#">
+            </a>
+            <span>Huỳnh Nguyễn Nhật Hào - KHMT2211025</span>
+          </div>
+          <div class="game-menu-row">
+            <a href="https://github.com/your-username" target="_blank">
+            </a>
+          </div>
+        </div>
+        <div class="game-menu-header">
+          <h3>Chi tiết về dự án</h3>
+        </div>
+        <div class="game-menu-body">
+          <div class="game-menu-row">Bài toán mê cung</div>
+          <div class="game-menu-row">Giải thuật: A*</div>
+          <div class="game-menu-row">
+            <img
+              src="./assets/images/js.png"
+              style="border-radius: 0"
+              width="20"
+              alt=""
+            />
+            <span>Ngôn ngữ lập trình: Javascript</span>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Thêm JavaScript để vẽ biểu đồ -->
-    <script>
-      // Lấy canvas element
-      const ctx = document.getElementById("maze-chart").getContext("2d");
-
-      // Dữ liệu mẫu (dựa trên hình ảnh)
-      const data = {
-        labels: ["Độ dài đường đi", "Số ô đã thăm"],
-        datasets: [
-          {
-            label: "Thông tin",
-            data: [50, 20], // Dữ liệu mẫu
-            backgroundColor: ["#2b6eff", "#ff1b6b"],
-            borderColor: ["#2b6eff", "#ff1b6b"],
-            borderWidth: 1,
-          },
-        ],
-      };
-
-      // Cấu hình biểu đồ
-      const config = {
-        type: "bar",
-        data: data,
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true,
-              max: 80,
-              ticks: {
-                stepSize: 20,
-              },
-            },
-          },
-          plugins: {
-            legend: {
-              display: false,
-            },
-          },
-        },
-      };
-
-      // Vẽ biểu đồ
-      new Chart(ctx, config);
-    </script>
+  </div>
   </body>
 </html>

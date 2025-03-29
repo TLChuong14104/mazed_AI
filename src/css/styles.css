@@ -9,31 +9,16 @@
 html {
   font-family: "Kanit", sans-serif;
 }
-
 body {
   width: 100%;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: row;
+  justify-content: flex-start;
   background: url(../assets/images/Land.png) repeat;
   background-size: 50px;
-}
-
-/* Container chính chứa mê cung và các section bên phải */
-.main-container {
-  display: flex;
   flex-wrap: wrap;
-  gap: 20px;
-  margin: 20px;
-  max-width: 1400px;
-  width: 100%;
-}
-
-/* Mê cung */
-.game-container {
-  flex: 2;
-  min-width: 400px;
 }
 
 .maze-game {
@@ -43,6 +28,8 @@ body {
   animation: sprite_bg 5s linear infinite;
   border-radius: 10px;
   margin: 10px;
+  transform: scale(0.7);
+  
 }
 
 .maze-row {
@@ -136,25 +123,18 @@ body {
   background: #2288008f;
 }
 
-/* Các section bên phải */
-.right-sections {
-  flex: 1;
-  min-width: 300px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  overflow-y: auto;
-  max-height: 90vh;
-}
-
 .game-menu {
   margin: 10px;
   background: #ffffff;
   border-radius: 10px;
+  overflow: hidden;
   min-width: 300px;
   transition: 0.4s ease;
   box-shadow: 0 0 40px #00000020;
   height: auto;
+  flex: 0;
+  
+
 }
 
 .game-menu-header {
@@ -181,15 +161,14 @@ body {
   border-top: 1px solid #ddd;
 }
 
-.game-menu-row input[type="range"] {
+.game-menu-row input {
   flex: 1;
   margin: 0 20px;
-  width: 100px;
 }
 
 .game-box-info {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   background: #2b6eff50;
   border-radius: 2px;
 }
@@ -207,8 +186,8 @@ body {
 }
 
 .button {
-  padding: 8px 12px;
-  min-width: 120px;
+  padding: 10px 15px;
+  min-width: 150px;
   color: #fff;
   background: #5757ff;
   border: none;
@@ -234,68 +213,6 @@ body {
 
 .button-danger {
   background: #ff1b6b;
-}
-
-/* Đảm bảo canvas trong section "Thông tin" chiếm toàn bộ ô */
-.info-section .game-menu-row canvas {
-  width: 100%;
-  height: 80px;
-  display: block;
-}
-
-/* Section "Chú thích" */
-.legend-section .game-menu-row img,
-.legend-section .game-menu-row .game-box-info,
-.legend-section .game-menu-row .maze-pop,
-.legend-section .game-menu-row .maze-cell {
-  width: 25px;
-  height: 25px;
-}
-
-.legend-section .game-menu-row span {
-  font-size: 14px;
-}
-
-/* Bảng phép tính A* */
-.calc-section {
-  margin: 20px;
-  max-width: 1400px;
-  width: 100%;
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 0 40px #00000020;
-  padding: 15px;
-  overflow-x: auto;
-}
-
-/* Tùy chỉnh bảng phép tính */
-#calc-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-
-#calc-table th,
-#calc-table td {
-  padding: 8px;
-  text-align: center;
-  border: 1px solid #ddd;
-}
-
-#calc-table th {
-  background-color: #f4f4f4;
-  font-weight: bold;
-}
-
-/* Tùy chỉnh màu sắc cho các cột */
-#calc-table td:nth-child(2) {
-  color: #00f; /* fScore: xanh dương */
-}
-#calc-table td:nth-child(3) {
-  color: #f00; /* gScore: đỏ */
-}
-#calc-table td:nth-child(4) {
-  color: #ff0; /* hScore: vàng */
 }
 
 .maze-login {
@@ -388,7 +305,47 @@ body {
     transform: translateY(20px);
   }
 }
+/* Bảng phép tính A* */
+.calc-section {
+  margin: 20px;
+  max-width: 1400px;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 40px #00000020;
+  padding: 15px;
+  overflow-x: auto;
+}
 
+/* Tùy chỉnh bảng phép tính */
+#calc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+#calc-table th,
+#calc-table td {
+  padding: 8px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+#calc-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+/* Tùy chỉnh màu sắc cho các cột */
+#calc-table td:nth-child(2) {
+  color: #00f; /* fScore: xanh dương */
+}
+#calc-table td:nth-child(3) {
+  color: #f00; /* gScore: đỏ */
+}
+#calc-table td:nth-child(4) {
+  color: #ff0; /* hScore: vàng */
+}
 .modal {
   position: fixed;
   top: 0;
@@ -418,69 +375,4 @@ body {
 .modal img {
   border-radius: 100px;
   margin-right: 10px;
-}
-
-/* Đảm bảo giao diện responsive trên màn hình nhỏ */
-@media (max-width: 768px) {
-  .main-container {
-    margin: 10px;
-    gap: 10px;
-  }
-
-  .game-container {
-    flex: 1 1 100%;
-  }
-
-  .right-sections {
-    flex: 1 1 100%;
-  }
-
-  .calc-section {
-    margin: 10px;
-  }
-
-  #calc-table {
-    font-size: 12px;
-  }
-
-  #calc-table th,
-  #calc-table td {
-    padding: 5px;
-  }
-}
-
-@media (max-width: 480px) {
-  .game-menu-row {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .game-menu-row label {
-    flex: none;
-  }
-
-  .game-menu-row input {
-    flex: none;
-    width: 100%;
-    margin: 0;
-  }
-
-  .maze-login-vit,
-  .maze-login-duck {
-    width: 80px;
-  }
-
-  .maze-login-dfs {
-    width: 150px;
-  }
-
-  .maze-login-play-btn {
-    padding: 8px 15px;
-    font-size: 14px;
-  }
-
-  #calc-table th:nth-child(4),
-  #calc-table td:nth-child(4) {
-    display: none;
-  }
 }
