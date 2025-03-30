@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "TLChuong14104",
-  "author": "tlChuong1410@gmail.com",
+  "author": "tlchuong1410@gmail.com",
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf docs",

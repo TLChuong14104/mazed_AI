@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vịt Đi Ép Ếch</title>
+    <title>Lục Lặc Len Lỏi</title>
+    <link rel="icon" href="./assets/images/boa1.png" type="image/png">
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
@@ -107,7 +108,7 @@
 
         <div class="game-menu-body">
           <div class="game-menu-row">
-            <img src="./assets/images/Duck.png" width="40" alt="" />
+            <img src="./assets/images/boa1.png" width="40" alt="" /> <!-- Thay từ Duck.png -->
             <span>Người chơi</span>
           </div>
 
@@ -156,99 +157,102 @@
         </div>
       </div>
     </section>
- <!-- Bảng phép tính A* được đặt dưới cùng -->
- <section class="calc-section">
-  <div class="game-menu">
-    <div class="game-menu-header">
-      <h3>Phép tính A*</h3>
-    </div>
-    <div class="game-menu-body">
-      <table id="calc-table">
-        <thead>
-          <tr>
-            <th>Vị trí</th>
-            <th>fScore</th>
-            <th>gScore</th>
-            <th>hScore</th>
-          </tr>
-        </thead>
-        <tbody id="calc-table-body"></tbody>
-      </table>
-    </div>
-  </div>
-</section>
+    <!-- Bảng phép tính A* được đặt dưới cùng -->
+    <section class="calc-section">
+      <div class="game-menu">
+        <div class="game-menu-header">
+          <h3>Phép tính A*</h3>
+        </div>
+        <div class="game-menu-body">
+          <table id="calc-table">
+            <thead>
+              <tr>
+                <th>Vị trí</th>
+                <th>fScore</th>
+                <th>gScore</th>
+                <th>hScore</th>
+              </tr>
+            </thead>
+            <tbody id="calc-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
     <div class="maze-login" id="maze-login">
-      <div class="maze-login-row">
-        <img src="./assets/images/Vit.png" alt="" class="maze-login-vit" />
-        <img src="./assets/images/Duck.png" alt="" class="maze-login-duck" />
+        <div class="maze-login-column">
+          <div class="maze-login-row">
+            <div class="maze-login-column">
+              <img src="./assets/images/boa1.png" alt="Hình 1" class="maze-login-duck" />
+            </div>
+            <div class="maze-login-column two-rows">
+              <div><img src="./assets/images/bòa_2.png" alt="Hình 2" class="maze-login-vit" /></div>
+              <div><img src="./assets/images/bòa3.png" alt="Hình 3" class="maze-login-vit" /></div>
+            </div>
+          </div>
+        <div class="d-flex">
+          <button class="maze-login-play-btn" id="maze-login-play-btn">
+            <strong>Play</strong>
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+
+          <button
+            class="maze-login-play-btn secondary"
+            id="maze-login-play-btn-without-sound"
+          >
+            <strong>Play</strong>
+            <i class="fa-solid fa-volume-xmark"></i>
+          </button>
+        </div>
       </div>
-
-      <img src="./assets/images/DFS.png" alt="" class="maze-login-dfs" />
-      <div class="d-flex">
-        <button class="maze-login-play-btn" id="maze-login-play-btn">
-          <strong>Play</strong>
-          <i class="fa-solid fa-volume-high"></i>
-        </button>
-
-        <button
-          class="maze-login-play-btn secondary"
-          id="maze-login-play-btn-without-sound"
-        >
-          <strong>Play</strong>
-          <i class="fa-solid fa-volume-xmark"></i>
-        </button>
+    <!-- Modal chi tiết dự án -->
+    <div class="modal" onclick="toggleModal()">
+      <div>
+        <div class="game-menu" onclick="event.stopPropagation()">
+          <div class="game-menu-header">
+            <h3>Những người thực hiện</h3>
+          </div>
+          <div class="game-menu-body">
+            <div class="game-menu-row">
+              <span>Trương Lê Chương - KHMT2211036</span>
+            </div>
+            <div class="game-menu-row">
+              <a href="https://github.com/TLChuong14104" target="_blank">
+              </a>
+              <span>Trần Nguyên Bảo - KHMT2211020</span>
+            </div>
+            <div class="game-menu-row">
+              <a href="#">
+              </a>
+              <span>Võ Đại Nhân - KHMT2211045</span>
+            </div>
+            <div class="game-menu-row">
+              <a href="#">
+              </a>
+              <span>Huỳnh Nguyễn Nhật Hào - KHMT2211025</span>
+            </div>
+            <div class="game-menu-row">
+              <a href="https://github.com/your-username" target="_blank">
+              </a>
+            </div>
+          </div>
+          <div class="game-menu-header">
+            <h3>Chi tiết về dự án</h3>
+          </div>
+          <div class="game-menu-body">
+            <div class="game-menu-row">Bài toán mê cung</div>
+            <div class="game-menu-row">Giải thuật: A*</div>
+            <div class="game-menu-row">
+              <img
+                src="./assets/images/js.png"
+                style="border-radius: 0"
+                width="20"
+                alt=""
+              />
+              <span>Ngôn ngữ lập trình: Javascript</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
-   <!-- Modal chi tiết dự án -->
-   <div class="modal" onclick="toggleModal()">
-    <div>
-      <div class="game-menu" onclick="event.stopPropagation()">
-        <div class="game-menu-header">
-          <h3>Những người thực hiện</h3>
-        </div>
-        <div class="game-menu-body">
-          <div class="game-menu-row">
-            <span>Trương Lê Chương - KHMT2211036</span>
-          </div>
-          <div class="game-menu-row">
-            <a href="https://github.com/TLChuong14104" target="_blank">
-            </a>
-            <span>Trần Nguyên Bảo - KHMT2211020</span>
-          </div>
-          <div class="game-menu-row">
-            <a href="#">
-            </a>
-            <span>Võ Đại Nhân - KHMT2211045</span>
-          </div>
-          <div class="game-menu-row">
-            <a href="#">
-            </a>
-            <span>Huỳnh Nguyễn Nhật Hào - KHMT2211025</span>
-          </div>
-          <div class="game-menu-row">
-            <a href="https://github.com/your-username" target="_blank">
-            </a>
-          </div>
-        </div>
-        <div class="game-menu-header">
-          <h3>Chi tiết về dự án</h3>
-        </div>
-        <div class="game-menu-body">
-          <div class="game-menu-row">Bài toán mê cung</div>
-          <div class="game-menu-row">Giải thuật: A*</div>
-          <div class="game-menu-row">
-            <img
-              src="./assets/images/js.png"
-              style="border-radius: 0"
-              width="20"
-              alt=""
-            />
-            <span>Ngôn ngữ lập trình: Javascript</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   </body>
 </html>

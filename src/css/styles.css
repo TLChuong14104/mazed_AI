@@ -63,7 +63,7 @@ body {
 
 .maze-character {
   position: absolute;
-  background: url(../assets/images/Duck.png) no-repeat;
+  background: url(D:\Mazed_ai\src\assets\images\boa1.png) no-repeat; 
   background-size: contain;
   transition: 0.4s ease;
   animation: sprite_character 1s infinite alternate;
@@ -236,27 +236,40 @@ body {
 }
 
 .maze-login-vit {
-  width: 20%;
+  width: 5%;
   animation: dfs_animation 9.4s ease infinite alternate;
-  min-width: 200px;
+  min-width: 500px;
 }
 
 .maze-login-duck {
   width: 10%;
-  min-width: 100px;
+  min-width: 300px;
   animation: vit_animation 1s ease infinite alternate;
 }
 
 .maze-login-dfs {
-  width: 40%;
-  min-width: 400px;
-  animation: dfs_animation 9.4s ease infinite alternate;
+  width: 10%;
+  animation: dfs_animation 8s ease infinite alternate;
 }
 
 .maze-login-row {
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+.maze-login-column {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center;
+  margin: 0 5px; 
+}
+.two-rows {
+  flex-direction: column;
+}
+.two-rows img {
+  display: block; /* Tránh bị co giãn không mong muốn */
 }
 
 .maze-login-play-btn {
