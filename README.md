@@ -13,10 +13,9 @@ Trước khi bắt đầu, hãy đảm bảo bạn đã cài đặt các phần 
 
 ### 📥 Bước 1: Clone dự án từ GitHub
 ```sh
-git clone https://github.com/username/repository.git
+git clone https://github.com/TLChuong14104/mazed_AI.git
+cd mazed_AI.
 ```
-Thay `username/repository` bằng đường dẫn thực tế của repo.
-
 ### 📂 Bước 2: Di chuyển vào thư mục dự án
 ```sh
 cd repository
