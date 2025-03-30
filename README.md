@@ -14,11 +14,10 @@ Trước khi bắt đầu, hãy đảm bảo bạn đã cài đặt các phần 
 ### 📥 Bước 1: Clone dự án từ GitHub
 ```sh
 git clone https://github.com/TLChuong14104/mazed_AI.git
-cd mazed_AI.
 ```
 ### 📂 Bước 2: Di chuyển vào thư mục dự án
 ```sh
-cd repository
+cd mazed_AI.
 ```
 
 ### 📦 Bước 3: Cài đặt dependencies
