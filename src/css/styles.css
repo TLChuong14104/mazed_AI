@@ -235,21 +235,22 @@ body {
   clip-path: circle(0% at top);
 }
 
-.maze-login-vit {
+.maze-login-boa2 {
   width: 5%;
-  animation: dfs_animation 9.4s ease infinite alternate;
+  animation: boa3_animation 9.4s ease infinite alternate;
   min-width: 500px;
 }
 
-.maze-login-duck {
+.maze-login-boa1 {
   width: 10%;
   min-width: 300px;
-  animation: vit_animation 1s ease infinite alternate;
+  animation: boa2_animation 1s ease infinite alternate;
 }
 
-.maze-login-dfs {
+.maze-login-boa3 {
   width: 10%;
-  animation: dfs_animation 8s ease infinite alternate;
+  animation: boa3_animation 8s ease infinite alternate;
+  min-width: 600px;
 }
 
 .maze-login-row {
@@ -302,7 +303,7 @@ body {
   margin-right: 10px;
 }
 
-@keyframes vit_animation {
+@keyframes boa2_animation {
   0%,
   99% {
   }
@@ -311,7 +312,7 @@ body {
   }
 }
 
-@keyframes dfs_animation {
+@keyframes boa3_animation {
   from {
   }
   to {
