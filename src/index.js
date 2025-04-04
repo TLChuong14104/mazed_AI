@@ -3,7 +3,7 @@ import GameGui from "./js/game-gui.js";
 import Maze from "./js/maze.js";
 import mazeGenerator from "./js/maze-generator.js";
 
-// Gắn Maze và GameGui vào window (dù không cần thiết nữa vì script inline đã bị xóa)
+// Gắn Maze và GameGui vào window 
 window.Maze = Maze;
 window.GameGui = GameGui;
 window.mazeGenerator = mazeGenerator;
