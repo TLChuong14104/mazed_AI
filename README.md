@@ -24,6 +24,9 @@ cd mazed_AI.
 ```sh
 npm install
 ```
+```sh
+npm install --save-dev webpack webpack-cli
+```
 Lệnh này sẽ tải về tất cả các package cần thiết.
 
 ### 🚀 Bước 4: Chạy dự án
