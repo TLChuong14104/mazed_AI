@@ -19,34 +19,51 @@ class Maze {
   }
 
   heuristic(p1, p2) {
-    return Math.abs(p1[0] - p2[0]) + Math.abs(p1[1] - p2[1]);
+    let h = Math.abs(p1[0] - p2[0]) + Math.abs(p1[1] - p2[1]);
+    // Kiểm tra các ô trên đường thẳng từ p1 đến p2
+    let x1 = p1[0], y1 = p1[1];
+    let x2 = p2[0], y2 = p2[1];
+    let penalty = 0;
+
+    // Di chuyển theo hướng x trước
+    let stepX = x1 < x2 ? 1 : (x1 > x2 ? -1 : 0);
+    let stepY = y1 < y2 ? 1 : (y1 > y2 ? -1 : 0);
+
+    let x = x1, y = y1;
+    while (x !== x2) {
+      if (this.map[x][y] === 1) penalty += 1; // Thêm phạt nhẹ nếu gặp tường
+      x += stepX;
+    }
+    while (y !== y2) {
+      if (this.map[x][y] === 1) penalty += 1; // Thêm phạt nhẹ nếu gặp tường
+      y += stepY;
+    }
+
+    return h + penalty;
   }
 
   findNextStates(current) {
+    const directions = [
+      [0, -1], // left
+      [0, 1],  // right
+      [-1, 0], // up
+      [1, 0]   // down
+    ];
+    
     const result = [];
-
-    if (current[1] && !this.map[current[0]][current[1] - 1]) {
-      result.push([current[0], current[1] - 1]);
+    
+    for (const [dx, dy] of directions) {
+      const newX = current[0] + dx;
+      const newY = current[1] + dy;
+      
+      // Kiểm tra trong biên giới hạn và ô không phải là tường
+      if (newX >= 0 && newX < this.map.length && 
+          newY >= 0 && newY < this.map[0].length && 
+          !this.map[newX][newY]) {
+        result.push([newX, newY]);
+      }
     }
-
-    if (
-      current[1] != this.map[0]?.length - 1 &&
-      !this.map[current[0]][current[1] + 1]
-    ) {
-      result.push([current[0], current[1] + 1]);
-    }
-
-    if (current[0] && !this.map[current[0] - 1][current[1]]) {
-      result.push([current[0] - 1, current[1]]);
-    }
-
-    if (
-      current[0] != this.map.length - 1 &&
-      !this.map[current[0] + 1][current[1]]
-    ) {
-      result.push([current[0] + 1, current[1]]);
-    }
-
+    
     return result;
   }
 
@@ -72,11 +89,11 @@ class Maze {
 
       const nextStates = this.findNextStates(current);
       const hScore = this.heuristic(current, this.target);
+      
       // Lưu các giá trị fScore, gScore, hScore vào steps
       this.steps.push({
         current,
         nextStates,
-        pops: [],
         fScore: currentFScore,
         gScore: currentGScore,
         hScore: hScore,
@@ -109,6 +126,8 @@ class Maze {
       }
     }
 
+    // Trường hợp không tìm thấy đường đi
+    this.steps.push({ message: "Không tìm thấy đường đi đến đích" });
     return false;
   }
 

@@ -13,23 +13,27 @@ body {
   width: 100%;
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: center;;
   flex-direction: row;
   justify-content: flex-start;
   background: url(../assets/images/Land.png) repeat;
   background-size: 50px;
   flex-wrap: wrap;
+  overflow-x: auto;
+  
 }
 
 .maze-game {
   position: relative;
   background: url(../assets/images/Water.png) repeat;
-  background-size: 150px;
+  background-size: 70px;
   animation: sprite_bg 5s linear infinite;
   border-radius: 10px;
   margin: 10px;
-  transform: scale(0.7);
-  
+  width: fit-content;
+  transform: scale(0.75); 
+  flex: 0 0 auto; 
+
 }
 
 .maze-row {
@@ -37,6 +41,8 @@ body {
 }
 
 .maze-cell {
+  width: 25px;
+  height: 25px;
   transition: 0.4s ease;
 }
 
@@ -44,6 +50,7 @@ body {
   background: url(../assets/images/Grass.png) no-repeat;
   background-size: cover;
   position: relative;
+  background-size: contain;
   transition: 0.4s ease;
 }
 
@@ -131,7 +138,6 @@ body {
   min-width: 300px;
   transition: 0.4s ease;
   box-shadow: 0 0 40px #00000020;
-  height: auto;
   flex: 0;
   
 
@@ -270,7 +276,7 @@ body {
   flex-direction: column;
 }
 .two-rows img {
-  display: block; /* Tránh bị co giãn không mong muốn */
+  display: block; 
 }
 
 .maze-login-play-btn {
@@ -358,7 +364,7 @@ body {
   color: #f00; /* gScore: đỏ */
 }
 #calc-table td:nth-child(4) {
-  color: #ff0; /* hScore: vàng */
+  color: rgb(190, 43, 82); /* hScore: vàng */
 }
 .modal {
   position: fixed;

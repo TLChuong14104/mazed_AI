@@ -1,6 +1,6 @@
 import MazeBuilder from "./maze-builder.js";
 
-export default function mazeGenerator(width = 10, height = 10) {
+export default function mazeGenerator(width = 10, height = 15) {
   const mazeBuilder = new MazeBuilder(height, width);
 
   let start = null;
