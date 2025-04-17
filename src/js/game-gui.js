@@ -124,7 +124,7 @@ class GameGui {
     let len = 0;
     let visitedCount = 0;
 
-    // Xóa nội dung bảng trước khi bắt đầu
+    
     const calcTableBody = document.getElementById("calc-table-body");
     if (calcTableBody) {
       calcTableBody.innerHTML = "";
@@ -170,7 +170,7 @@ class GameGui {
 
       this.chart.update();
 
-      // Thêm thông tin phép tính vào bảng
+      
       if (step.fScore !== undefined) {
         const row = document.createElement("tr");
         row.innerHTML = /*html*/ `
